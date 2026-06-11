@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shiitake — Restaurante Japonês</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #faf8f3;
+    --rice: #f0ece2;
+    --ember: #c8382a;
+    --ember-dark: #9e2a1e;
+    --gold: #c4943a;
+    --ash: #3a3734;
+    --mist: #a09a92;
+    --white: #ffffff;
+    --ff-display: 'Playfair Display', Georgia, serif;
+    --ff-jp: 'Noto Serif JP', serif;
+    --ff-body: 'Inter', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--ink); color: var(--paper); font-family: var(--ff-body); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(15,14,12,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,148,58,0.15);
+    transition: padding .3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--paper);
+  }
+  .nav-logo-kanji {
+    font-family: var(--ff-jp); font-size: 22px; color: var(--gold); letter-spacing: 2px;
+  }
+  .nav-logo-name {
+    font-family: var(--ff-display); font-size: 20px; letter-spacing: 3px;
+    font-style: italic; color: var(--paper);
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--mist); text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--ember); color: var(--white);
+    padding: 10px 24px; border: none; border-radius: 2px;
+    font-family: var(--ff-body); font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer; text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--ember-dark); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1.5px; background: var(--paper); display: block; transition: .3s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 80px; position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px; position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px; display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); display: block; }
+  .hero-title {
+    font-family: var(--ff-display); font-size: clamp(52px, 6vw, 84px);
+    line-height: 1.05; font-weight: 700; margin-bottom: 12px;
+  }
+  .hero-title em { color: var(--ember); font-style: italic; font-weight: 400; }
+  .hero-kanji {
+    font-family: var(--ff-jp); font-size: 14px; color: var(--mist);
+    letter-spacing: 6px; margin-bottom: 32px;
+  }
+  .hero-desc { font-size: 15px; line-height: 1.8; color: var(--mist); max-width: 420px; margin-bottom: 48px; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ember); color: var(--white);
+    padding: 14px 32px; border: none; border-radius: 2px;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; transition: background .2s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--ember-dark); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--paper);
+    padding: 14px 32px; border: 1px solid rgba(250,248,243,0.25); border-radius: 2px;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 64px; padding-top: 40px;
+    border-top: 1px solid rgba(250,248,243,0.1);
+  }
+  .stat-num { font-family: var(--ff-display); font-size: 36px; color: var(--gold); font-weight: 700; }
+  .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist); margin-top: 4px; }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1a1815 0%, #0f0e0c 100%);
+  }
+  .hero-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(196,148,58,0.08) 0%, transparent 65%);
+  }
+  .hero-img-wrap {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.85;
+    transform: scale(1.03); transition: transform 8s ease;
+  }
+  .hero-img-wrap img:hover { transform: scale(1); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    z-index: 5;
+  }
+  .hero-scroll span { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--mist); }
+  .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 80px; }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); display: block; }
+  .section-title {
+    font-family: var(--ff-display); font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.1; font-weight: 700; margin-bottom: 20px;
+  }
+  .section-sub { font-size: 15px; line-height: 1.8; color: var(--mist); max-width: 540px; }
+
+  /* ── CATEGORY TABS ── */
+  .menu-section { background: var(--ink); }
+  .menu-header { text-align: center; margin-bottom: 56px; }
+  .menu-header .section-eyebrow { justify-content: center; }
+  .menu-header .section-eyebrow::before { display: none; }
+  .menu-header .section-title { margin: 0 auto 16px; }
+  .menu-header .section-sub { margin: 0 auto; text-align: center; }
+
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 4px;
+    background: rgba(255,255,255,0.04); border-radius: 4px;
+    padding: 4px; margin-bottom: 56px; max-width: 640px; margin-left: auto; margin-right: auto;
+  }
+  .tab-btn {
+    flex: 1; padding: 10px 20px; background: transparent; border: none;
+    color: var(--mist); font-family: var(--ff-body); font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    border-radius: 2px; transition: all .2s;
+  }
+  .tab-btn.active { background: var(--ember); color: var(--white); }
+  .tab-btn:hover:not(.active) { color: var(--paper); }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 28px; max-width: 1200px; margin: 0 auto;
+  }
+  .menu-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color .25s, transform .25s; cursor: pointer;
+    display: none;
+  }
+  .menu-card.visible { display: block; }
+  .menu-card:hover { border-color: rgba(196,148,58,0.35); transform: translateY(-4px); }
+  .card-img {
+    width: 100%; aspect-ratio: 1; overflow: hidden; background: #1a1815;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .card-body { padding: 20px; }
+  .card-tag { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .card-name { font-family: var(--ff-display); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--mist); line-height: 1.6; margin-bottom: 16px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-price { font-family: var(--ff-display); font-size: 20px; color: var(--gold); font-weight: 700; }
+  .card-add {
+    background: var(--ember); color: white; border: none;
+    padding: 8px 16px; border-radius: 2px; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; cursor: pointer; transition: background .2s;
+  }
+  .card-add:hover { background: var(--ember-dark); }
+  .menu-more-wrap { text-align: center; margin-top: 48px; }
+
+  /* ── RODÍZIO ── */
+  .rodizio-section {
+    background: linear-gradient(180deg, var(--ink) 0%, #1a1512 100%);
+    position: relative; overflow: hidden;
+  }
+  .rodizio-section::before {
+    content: '椎茸'; font-family: var(--ff-jp);
+    position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+    font-size: 280px; color: rgba(196,148,58,0.04); line-height: 1;
+    pointer-events: none;
+  }
+  .rodizio-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .rodizio-plans { display: flex; flex-direction: column; gap: 16px; }
+  .plan-card {
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 4px;
+    padding: 28px 32px; position: relative; transition: border-color .2s, background .2s;
+    cursor: default;
+  }
+  .plan-card:hover { border-color: var(--gold); background: rgba(196,148,58,0.04); }
+  .plan-card.featured {
+    border-color: var(--ember); background: rgba(200,56,42,0.07);
+  }
+  .plan-badge {
+    position: absolute; top: -11px; left: 24px;
+    background: var(--ember); color: white; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px;
+  }
+  .plan-name { font-family: var(--ff-display); font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .plan-price { font-size: 13px; color: var(--mist); margin-bottom: 12px; }
+  .plan-price strong { font-family: var(--ff-display); font-size: 26px; color: var(--gold); font-weight: 700; }
+  .plan-items { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .plan-items li {
+    font-size: 11px; letter-spacing: 1px; background: rgba(255,255,255,0.05);
+    padding: 4px 10px; border-radius: 2px; color: var(--mist);
+  }
+
+  /* ── RESERVA ── */
+  .reserva-section { background: #100f0d; }
+  .reserva-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .reserva-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mist); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper); padding: 12px 16px; border-radius: 2px;
+    font-family: var(--ff-body); font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--ash); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--ember); color: white; border: none;
+    padding: 16px 40px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    cursor: pointer; transition: background .2s; align-self: flex-start; margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--ember-dark); }
+  .reserva-info { padding-top: 8px; }
+  .info-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+  .info-icon { font-size: 20px; margin-top: 2px; }
+  .info-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .info-val { font-size: 15px; line-height: 1.7; color: var(--paper); }
+
+  /* ── FRANQUIA ── */
+  .franquia-section { background: linear-gradient(135deg, #1a1512 0%, #0f0e0c 100%); }
+  .franquia-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .franquia-steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 24px; padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: var(--ff-display); font-size: 40px; color: rgba(196,148,58,0.25);
+    font-weight: 700; line-height: 1; flex-shrink: 0; width: 48px;
+  }
+  .step-content {}
+  .step-title { font-family: var(--ff-display); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .step-desc { font-size: 14px; color: var(--mist); line-height: 1.7; }
+  .franquia-highlight {
+    background: rgba(196,148,58,0.06); border: 1px solid rgba(196,148,58,0.2);
+    border-radius: 4px; padding: 40px; text-align: center;
+  }
+  .fh-title { font-family: var(--ff-display); font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .fh-sub { font-size: 14px; color: var(--mist); margin-bottom: 32px; line-height: 1.6; }
+  .fh-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .fh-num { text-align: center; }
+  .fh-num strong { font-family: var(--ff-display); font-size: 36px; color: var(--gold); display: block; }
+  .fh-num span { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mist); }
+  .franquia-form { display: flex; flex-direction: column; gap: 12px; }
+  .franquia-form input, .franquia-form select {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper); padding: 12px 16px; border-radius: 2px;
+    font-family: var(--ff-body); font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  .franquia-form input:focus, .franquia-form select:focus { border-color: var(--gold); }
+  .franquia-form select option { background: var(--ash); }
+  .franquia-form button {
+    background: var(--gold); color: var(--ink); border: none;
+    padding: 14px; border-radius: 2px; font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-weight: 600;
+    transition: opacity .2s;
+  }
+  .franquia-form button:hover { opacity: 0.85; }
+
+  /* ── EXECUTIVO ── */
+  .exec-section { background: var(--ink); }
+  .exec-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .exec-days { display: flex; flex-direction: column; gap: 12px; }
+  .exec-day {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 24px;
+    border: 1px solid rgba(255,255,255,0.07); border-radius: 2px;
+    transition: border-color .2s, background .2s;
+    cursor: default;
+  }
+  .exec-day:hover { border-color: rgba(196,148,58,0.3); background: rgba(196,148,58,0.03); }
+  .exec-day-name { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); width: 80px; flex-shrink: 0; }
+  .exec-day-menu { font-size: 14px; color: var(--paper); flex: 1; line-height: 1.5; }
+  .exec-day-price { font-family: var(--ff-display); font-size: 20px; color: var(--gold); font-weight: 700; }
+  .exec-includes { margin-top: 32px; padding: 24px; background: rgba(255,255,255,0.03); border-radius: 4px; }
+  .exec-includes p { font-size: 13px; color: var(--mist); line-height: 1.8; }
+  .exec-includes strong { color: var(--paper); }
+
+  /* ── ABOUT ── */
+  .about-section { background: #0c0b09; }
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-img-collage { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: 480px; }
+  .about-img-main { grid-column: 1; grid-row: 1 / 3; background: #1a1815; border-radius: 4px; overflow: hidden; font-size: 80px; display: flex; align-items: center; justify-content: center; }
+  .about-img-sm { background: #1a1815; border-radius: 4px; overflow: hidden; font-size: 48px; display: flex; align-items: center; justify-content: center; }
+  .about-img-main img, .about-img-sm img { width: 100%; height: 100%; object-fit: cover; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+  .val-item {}
+  .val-icon { font-size: 24px; margin-bottom: 10px; }
+  .val-title { font-family: var(--ff-display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .val-text { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+  /* ── GALERIA ── */
+  .galeria-section { background: var(--ink); padding: 80px; }
+  .galeria-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 220px 220px;
+    gap: 12px;
+  }
+  .galeria-item {
+    border-radius: 4px; overflow: hidden;
+    background: #1a1815; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .galeria-item.tall { grid-row: 1 / 3; }
+  .galeria-item img { width: 100%; height: 100%; object-fit: cover; }
+  .galeria-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .galeria-item:hover::after { opacity: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0908; border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 64px 80px 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  .footer-brand {}
+  .footer-logo { font-family: var(--ff-display); font-size: 24px; font-weight: 700; font-style: italic; color: var(--paper); margin-bottom: 4px; }
+  .footer-jp { font-family: var(--ff-jp); font-size: 13px; color: var(--gold); letter-spacing: 4px; margin-bottom: 16px; }
+  .footer-desc { font-size: 13px; color: var(--mist); line-height: 1.8; max-width: 260px; }
+  .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+  .social-link {
+    width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    color: var(--mist); text-decoration: none; font-size: 14px;
+    transition: border-color .2s, color .2s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: 13px; color: var(--mist); text-decoration: none; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--paper); }
+  .footer-col address { font-style: normal; font-size: 13px; color: var(--mist); line-height: 1.8; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-bottom p { font-size: 12px; color: var(--mist); }
+  .footer-bar {
+    background: var(--ember); padding: 14px 80px;
+    text-align: center; font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--white);
+  }
+
+  /* ── CART FLOAT ── */
+  .cart-float {
+    position: fixed; bottom: 32px; right: 32px; z-index: 90;
+    background: var(--ember); color: white; border: none;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer; box-shadow: 0 8px 32px rgba(200,56,42,0.4);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .cart-float:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(200,56,42,0.5); }
+  .cart-badge {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--gold); color: var(--ink); border-radius: 50%;
+    width: 20px; height: 20px; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200;
+    display: none; align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #1a1815; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; padding: 40px; max-width: 480px; width: 100%;
+    max-height: 80vh; overflow-y: auto;
+  }
+  .modal-title { font-family: var(--ff-display); font-size: 26px; font-weight: 700; margin-bottom: 24px; }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; color: var(--mist); font-size: 22px; cursor: pointer;
+  }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .cart-item-name { font-size: 14px; }
+  .cart-item-price { font-family: var(--ff-display); font-size: 16px; color: var(--gold); }
+  .cart-total { display: flex; justify-content: space-between; font-family: var(--ff-display); font-size: 22px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.15); }
+  .cart-total span:last-child { color: var(--gold); }
+  .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+  .modal-actions button { flex: 1; }
+  .empty-cart { text-align: center; padding: 32px 0; color: var(--mist); font-size: 14px; }
+
+  /* ── NOTIFICATION ── */
+  .notif {
+    position: fixed; top: 96px; right: 32px; z-index: 300;
+    background: var(--gold); color: var(--ink); padding: 12px 24px;
+    border-radius: 2px; font-size: 13px; font-weight: 600;
+    opacity: 0; transform: translateY(-10px);
+    transition: opacity .3s, transform .3s; pointer-events: none;
+  }
+  .notif.show { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 24px 48px; }
+    .hero-right { height: 280px; }
+    section { padding: 64px 24px; }
+    .rodizio-inner, .reserva-inner, .exec-inner, .about-inner,
+    .franquia-inner { grid-template-columns: 1fr; gap: 48px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    footer { padding: 48px 24px 24px; }
+    .footer-bar { padding: 14px 24px; }
+    .galeria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .galeria-item.tall { grid-row: auto; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .menu-tabs { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-kanji">椎茸</span>
+    <span class="nav-logo-name">Shiitake</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#menu">Cardápio</a></li>
+    <li><a href="#rodizio">Rodízio</a></li>
+    <li><a href="#executivo">Menu Executivo</a></li>
+    <li><a href="#reserva">Reservas</a></li>
+    <li><a href="#franquia">Franquia</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+  </ul>
+  <a href="#reserva" class="nav-cta">Reservar Mesa</a>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Restaurante Japonês desde 2009</div>
+    <h1 class="hero-title">
+      Sabores do<br>
+      <em>Japão</em><br>
+      no Brasil
+    </h1>
+    <div class="hero-kanji">椎茸 — A ESSÊNCIA DO ORIENTE</div>
+    <p class="hero-desc">
+      Do sushi ao rodízio, da pizza japonesa ao menu executivo — uma experiência gastronômica completa que une tradição milenar e o calor da hospitalidade brasileira.
+    </p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">Ver Cardápio</a>
+      <a href="#reserva" class="btn-outline">Fazer Reserva</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Anos de Tradição</div>
+      </div>
+      <div>
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Itens no Cardápio</div>
+      </div>
+      <div>
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Avaliação Média</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div style="font-size: 160px; text-align: center; line-height: 1; padding: 60px 20px; opacity: 0.7;">
+        🍣<br><span style="font-size:80px">🥢</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <div class="section-eyebrow">Nosso Cardápio</div>
+    <h2 class="section-title">O que preparamos para você</h2>
+    <p class="section-sub">Ingredientes frescos, receitas autênticas e o toque artesanal que nos define há 15 anos.</p>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="filterMenu('todos')">Todos</button>
+    <button class="tab-btn" onclick="filterMenu('sushi')">Sushi & Rolls</button>
+    <button class="tab-btn" onclick="filterMenu('pizza')">Pizzas</button>
+    <button class="tab-btn" onclick="filterMenu('temaki')">Temaki</button>
+    <button class="tab-btn" onclick="filterMenu('quente')">Quentes</button>
+    <button class="tab-btn" onclick="filterMenu('bebida')">Bebidas</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+    <!-- SUSHI -->
+    <div class="menu-card visible" data-cat="sushi">
+      <div class="card-img">🐟</div>
+      <div class="card-body">
+        <div class="card-tag">Sushi</div>
+        <div class="card-name">Philadelphia Clássico</div>
+        <div class="card-desc">Salmão, cream cheese, pepino. 8 unidades.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 32</span>
+          <button class="card-add" onclick="addCart('Philadelphia Clássico', 32)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="sushi">
+      <div class="card-img">🍱</div>
+      <div class="card-body">
+        <div class="card-tag">Sushi</div>
+        <div class="card-name">Uramaki Spicy</div>
+        <div class="card-desc">Atum, sriracha, cebola crispy. 10 unidades.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 38</span>
+          <button class="card-add" onclick="addCart('Uramaki Spicy', 38)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="sushi">
+      <div class="card-img">🥑</div>
+      <div class="card-body">
+        <div class="card-tag">Sushi</div>
+        <div class="card-name">Avocado Maki</div>
+        <div class="card-desc">Abacate, pepino, gergelim. Vegano. 8 unidades.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 28</span>
+          <button class="card-add" onclick="addCart('Avocado Maki', 28)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="sushi">
+      <div class="card-img">🍤</div>
+      <div class="card-body">
+        <div class="card-tag">Sushi</div>
+        <div class="card-name">Tempura Roll</div>
+        <div class="card-desc">Camarão empanado, mayo, cebolinha. 8 unidades.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 42</span>
+          <button class="card-add" onclick="addCart('Tempura Roll', 42)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <!-- PIZZA -->
+    <div class="menu-card visible" data-cat="pizza">
+      <div class="card-img">🍕</div>
+      <div class="card-body">
+        <div class="card-tag">Pizza Japonesa</div>
+        <div class="card-name">Pizza de Salmão</div>
+        <div class="card-desc">Molho shoyu, salmão defumado, cream cheese, rúcula.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 68</span>
+          <button class="card-add" onclick="addCart('Pizza de Salmão', 68)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="pizza">
+      <div class="card-img">🦐</div>
+      <div class="card-body">
+        <div class="card-tag">Pizza Japonesa</div>
+        <div class="card-name">Pizza Camarão Teriyaki</div>
+        <div class="card-desc">Camarão, molho teriyaki, pimentão, catupiry.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 72</span>
+          <button class="card-add" onclick="addCart('Pizza Camarão Teriyaki', 72)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <!-- TEMAKI -->
+    <div class="menu-card visible" data-cat="temaki">
+      <div class="card-img">🌮</div>
+      <div class="card-body">
+        <div class="card-tag">Temaki</div>
+        <div class="card-name">Temaki Salmão</div>
+        <div class="card-desc">Cone de alga, salmão fresco, cream cheese, pepino.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 22</span>
+          <button class="card-add" onclick="addCart('Temaki Salmão', 22)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="temaki">
+      <div class="card-img">🎋</div>
+      <div class="card-body">
+        <div class="card-tag">Temaki</div>
+        <div class="card-name">Temaki Atum Spicy</div>
+        <div class="card-desc">Atum, molho especial picante, cebolinha, gergelim.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 24</span>
+          <button class="card-add" onclick="addCart('Temaki Atum Spicy', 24)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <!-- QUENTE -->
+    <div class="menu-card visible" data-cat="quente">
+      <div class="card-img">🍜</div>
+      <div class="card-body">
+        <div class="card-tag">Prato Quente</div>
+        <div class="card-name">Missoshiru</div>
+        <div class="card-desc">Sopa de missô com tofu, wakame e cebolinha.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 18</span>
+          <button class="card-add" onclick="addCart('Missoshiru', 18)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="quente">
+      <div class="card-img">🍗</div>
+      <div class="card-body">
+        <div class="card-tag">Prato Quente</div>
+        <div class="card-name">Frango Karaage</div>
+        <div class="card-desc">Frango frito à japonesa com molho ponzu e limão.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 46</span>
+          <button class="card-add" onclick="addCart('Frango Karaage', 46)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <!-- BEBIDA -->
+    <div class="menu-card visible" data-cat="bebida">
+      <div class="card-img">🍶</div>
+      <div class="card-body">
+        <div class="card-tag">Bebida</div>
+        <div class="card-name">Sake Tradicional</div>
+        <div class="card-desc">Sake japonês quente ou frio. 180ml.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 28</span>
+          <button class="card-add" onclick="addCart('Sake Tradicional', 28)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card visible" data-cat="bebida">
+      <div class="card-img">🍵</div>
+      <div class="card-body">
+        <div class="card-tag">Bebida</div>
+        <div class="card-name">Chá Matcha Gelado</div>
+        <div class="card-desc">Matcha premium com leite de amêndoas. 350ml.</div>
+        <div class="card-footer">
+          <span class="card-price">R$ 16</span>
+          <button class="card-add" onclick="addCart('Chá Matcha Gelado', 16)">+ Carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-more-wrap">
+    <a href="#reserva" class="btn-outline" style="display:inline-block">Ver Cardápio Completo ↓</a>
+  </div>
+</section>
+
+<!-- RODÍZIO -->
+<section class="rodizio-section" id="rodizio">
+  <div class="rodizio-inner">
+    <div>
+      <div class="section-eyebrow">Modalidade</div>
+      <h2 class="section-title">Rodízio<br>Japonês</h2>
+      <p class="section-sub" style="margin-bottom:40px">
+        Coma à vontade! Peças servidas diretamente na sua mesa, quantas vezes quiser, até sentir que o Japão chegou perto.
+      </p>
+      <div class="rodizio-plans">
+        <div class="plan-card">
+          <div class="plan-name">Rodízio Popular</div>
+          <div class="plan-price">por pessoa / <strong>R$ 79</strong></div>
+          <ul class="plan-items">
+            <li>Sushis Clássicos</li><li>Temakis</li><li>Gyoza</li>
+            <li>Missoshiru</li><li>Sobremesa</li>
+          </ul>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-badge">Mais pedido</div>
+          <div class="plan-name">Rodízio Premium</div>
+          <div class="plan-price">por pessoa / <strong>R$ 119</strong></div>
+          <ul class="plan-items">
+            <li>Tudo do Popular</li><li>Sashimis</li><li>Hot Rolls</li>
+            <li>Camarão Empanado</li><li>Sake incluso</li><li>Sobremesas Premium</li>
+          </ul>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Rodízio Kids</div>
+          <div class="plan-price">até 10 anos / <strong>R$ 39</strong></div>
+          <ul class="plan-items">
+            <li>Peças Suaves</li><li>Temaki de Frango</li><li>Suco incluso</li><li>Sobremesa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 120px; text-align: center; margin-bottom: 32px; line-height: 1;">🍣🫁🦐</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius:4px; padding: 28px;">
+        <p style="font-size:13px; color: var(--mist); line-height: 1.8; margin-bottom:16px">
+          <strong style="color: var(--paper)">Horários do Rodízio:</strong><br>
+          Terça a Sexta: 12h–14h30 e 19h–22h30<br>
+          Sábado e Domingo: 12h–23h<br>
+          Segunda: Fechado
+        </p>
+        <p style="font-size:13px; color: var(--mist); line-height:1.8">
+          <strong style="color: var(--paper)">Reservas obrigatórias</strong> para grupos acima de 8 pessoas.
+        </p>
+      </div>
+      <div style="margin-top:24px; text-align:center">
+        <a href="#reserva" class="btn-primary">Reservar para o Rodízio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU EXECUTIVO -->
+<section class="exec-section" id="executivo">
+  <div class="exec-inner">
+    <div>
+      <div class="section-eyebrow">Almoço Executivo</div>
+      <h2 class="section-title">Menu<br>Executivo</h2>
+      <p class="section-sub" style="margin-bottom: 40px">
+        Para quem tem pouco tempo mas não abre mão da qualidade. Pratos frescos, servidos rápido, de segunda a sexta.
+      </p>
+      <div class="exec-includes">
+        <p>
+          <strong>Todos os menus incluem:</strong><br>
+          Missoshiru de entrada · Prato principal · Arroz japonês · Chá verde · Sobremesa do dia
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="exec-days">
+        <div class="exec-day">
+          <div class="exec-day-name">Segunda</div>
+          <div class="exec-day-menu">Frango Teriyaki com legumes grelhados e shoyu</div>
+          <div class="exec-day-price">R$ 42</div>
+        </div>
+        <div class="exec-day">
+          <div class="exec-day-name">Terça</div>
+          <div class="exec-day-menu">Salmão grelhado com molho de maracujá e gengibre</div>
+          <div class="exec-day-price">R$ 48</div>
+        </div>
+        <div class="exec-day">
+          <div class="exec-day-name">Quarta</div>
+          <div class="exec-day-menu">Yakissoba de camarão com legumes da estação</div>
+          <div class="exec-day-price">R$ 52</div>
+        </div>
+        <div class="exec-day">
+          <div class="exec-day-name">Quinta</div>
+          <div class="exec-day-menu">Atum selado com crosta de gergelim e missô</div>
+          <div class="exec-day-price">R$ 58</div>
+        </div>
+        <div class="exec-day">
+          <div class="exec-day-name">Sexta</div>
+          <div class="exec-day-menu">Frutos do mar na chapa com manteiga e limão tahiti</div>
+          <div class="exec-day-price">R$ 62</div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top: 24px">
+        <a href="#reserva" class="btn-primary">Quero o Executivo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVA -->
+<section class="reserva-section" id="reserva">
+  <div style="text-align:center; margin-bottom:56px">
+    <div class="section-eyebrow" style="justify-content:center">
+      <span style="width:28px;height:1px;background:var(--gold);display:block"></span>
+      Faça Sua Reserva
+    </div>
+    <h2 class="section-title">Reserve sua mesa</h2>
+    <p class="section-sub" style="margin:0 auto; text-align:center">Garantia de lugar para a melhor experiência japonesa da cidade.</p>
+  </div>
+  <div class="reserva-inner">
+    <form class="reserva-form" onsubmit="submitReserva(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone / WhatsApp</label>
+          <input type="tel" placeholder="(00) 00000-0000" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Data</label>
+          <input type="date" required>
+        </div>
+        <div class="form-group">
+          <label>Horário</label>
+          <select required>
+            <option value="">Selecione</option>
+            <option>12:00</option><option>12:30</option><option>13:00</option>
+            <option>19:00</option><option>19:30</option><option>20:00</option>
+            <option>20:30</option><option>21:00</option><option>21:30</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nº de Pessoas</label>
+          <select required>
+            <option value="">Selecione</option>
+            <option>1 pessoa</option><option>2 pessoas</option><option>3 pessoas</option>
+            <option>4 pessoas</option><option>5–8 pessoas</option><option>9+ pessoas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Modalidade</label>
+          <select>
+            <option>À la carte</option>
+            <option>Rodízio Popular</option>
+            <option>Rodízio Premium</option>
+            <option>Menu Executivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Ocasião / Observações</label>
+        <textarea placeholder="Aniversário, alergias, cadeirante, etc..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Confirmar Reserva</button>
+    </form>
+
+    <div class="reserva-info">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Endereço</div>
+          <div class="info-val">Rua Shiitake, 108 — Centro<br>Itajubá, Minas Gerais</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div>
+          <div class="info-label">Horários</div>
+          <div class="info-val">Terça a Quinta: 11h30–23h<br>Sexta e Sábado: 11h30–00h<br>Domingo: 12h–22h</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Contato</div>
+          <div class="info-val">(35) 3622-0000<br>WhatsApp: (35) 99800-0000</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🅿️</div>
+        <div>
+          <div class="info-label">Estacionamento</div>
+          <div class="info-val">Valet gratuito para clientes<br>Estacionamento próprio no subsolo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRANQUIA -->
+<section class="franquia-section" id="franquia">
+  <div class="franquia-inner">
+    <div>
+      <div class="section-eyebrow">Oportunidade</div>
+      <h2 class="section-title">Seja um<br>Franqueado</h2>
+      <p class="section-sub" style="margin-bottom:48px">
+        Leve o Shiitake para sua cidade. Um modelo de negócio sólido, com 15 anos de experiência, suporte completo e uma marca que o público ama.
+      </p>
+      <div class="franquia-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <div class="step-title">Preencha o formulário</div>
+            <div class="step-desc">Envie suas informações básicas e a cidade de interesse para análise inicial.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <div class="step-title">Reunião de apresentação</div>
+            <div class="step-desc">Nossa equipe apresenta o modelo completo, investimento e projeções de retorno.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <div class="step-title">Due diligence & contrato</div>
+            <div class="step-desc">Análise do ponto, assinatura do contrato e início do processo de abertura.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <div class="step-title">Treinamento & abertura</div>
+            <div class="step-desc">Capacitação completa da equipe e suporte intensivo nos primeiros 90 dias.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="franquia-highlight">
+        <div class="fh-title">Por que Shiitake?</div>
+        <div class="fh-sub">Um dos restaurantes japoneses mais premiados de Minas Gerais, com modelo de franquia testado e aprovado.</div>
+        <div class="fh-nums">
+          <div class="fh-num"><strong>12</strong><span>Unidades Ativas</span></div>
+          <div class="fh-num"><strong>18m</strong><span>Retorno Médio</span></div>
+          <div class="fh-num"><strong>96%</strong><span>Renovação de Contrato</span></div>
+          <div class="fh-num"><strong>R$ 280k</strong><span>Investimento Inicial</span></div>
+        </div>
+        <form class="franquia-form" onsubmit="submitFranquia(event)">
+          <input type="text" placeholder="Seu nome completo" required>
+          <input type="email" placeholder="E-mail para contato" required>
+          <input type="tel" placeholder="Telefone / WhatsApp">
+          <input type="text" placeholder="Cidade de interesse">
+          <select>
+            <option value="">Experiência com food service?</option>
+            <option>Sim, tenho experiência</option>
+            <option>Não, mas quero aprender</option>
+            <option>Tenho outras franquias</option>
+          </select>
+          <button type="submit">Quero ser Franqueado</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria-section" id="galeria">
+  <div style="text-align:center; margin-bottom:48px">
+    <div class="section-eyebrow" style="justify-content:center">
+      <span style="width:28px;height:1px;background:var(--gold);display:block"></span>
+      Galeria
+    </div>
+    <h2 class="section-title">Momentos Shiitake</h2>
+  </div>
+  <div class="galeria-grid">
+    <div class="galeria-item tall" style="font-size:100px">🍣</div>
+    <div class="galeria-item" style="font-size:72px">🥢</div>
+    <div class="galeria-item" style="font-size:72px">🍜</div>
+    <div class="galeria-item" style="font-size:72px">🍶</div>
+    <div class="galeria-item" style="font-size:72px">🦐</div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="about-section" id="sobre">
+  <div class="about-inner">
+    <div class="about-img-collage">
+      <div class="about-img-main">🏮</div>
+      <div class="about-img-sm">👨‍🍳</div>
+      <div class="about-img-sm">🌸</div>
+    </div>
+    <div>
+      <div class="section-eyebrow">Nossa História</div>
+      <h2 class="section-title">Bem-vindo ao<br><em style="color:var(--gold)">Shiitake</em></h2>
+      <p style="font-size:15px; color: var(--mist); line-height:1.9; margin-bottom: 32px">
+        Fundado em 2009 pelo chef Kenji Tanaka e sua sócia brasileira Ana Lima, o Shiitake nasceu da vontade de unir a precisão da culinária japonesa com a alegria da mesa brasileira. Em mais de 15 anos, nos tornamos referência em Minas Gerais.
+      </p>
+      <p style="font-size:15px; color: var(--mist); line-height:1.9; margin-bottom: 40px">
+        Nossa cozinha opera com ingredientes frescos entregues diariamente. Nada é congelado. Cada peça é feita na hora, com o mesmo cuidado do primeiro dia.
+      </p>
+      <div class="about-values">
+        <div class="val-item">
+          <div class="val-icon">🐟</div>
+          <div class="val-title">Frescor Diário</div>
+          <div class="val-text">Peixe fresco todo dia. Sem exceção.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">🎯</div>
+          <div class="val-title">Precisão Japonesa</div>
+          <div class="val-text">Técnicas tradicionais preservadas.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">🌿</div>
+          <div class="val-title">Sustentável</div>
+          <div class="val-text">Fornecedores locais e responsáveis.</div>
+        </div>
+        <div class="val-item">
+          <div class="val-icon">❤️</div>
+          <div class="val-title">Com Afeto</div>
+          <div class="val-text">Hospitalidade que você sente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Shiitake</div>
+      <div class="footer-jp">椎茸 — Restaurante Japonês</div>
+      <p class="footer-desc">Autêntica culinária japonesa no coração de Minas Gerais. Frescor, tradição e sabor em cada peça.</p>
+      <div class="footer-social">
+        <a class="social-link" href="#">📸</a>
+        <a class="social-link" href="#">📘</a>
+        <a class="social-link" href="#">🐦</a>
+        <a class="social-link" href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Cardápio</h4>
+      <ul>
+        <li><a href="#menu">Sushi & Rolls</a></li>
+        <li><a href="#menu">Pizzas Japonesas</a></li>
+        <li><a href="#menu">Temakis</a></li>
+        <li><a href="#menu">Pratos Quentes</a></li>
+        <li><a href="#menu">Bebidas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#rodizio">Rodízio</a></li>
+        <li><a href="#executivo">Menu Executivo</a></li>
+        <li><a href="#reserva">Reservas</a></li>
+        <li><a href="#franquia">Franquia</a></li>
+        <li><a href="#">Delivery</a></li>
+        <li><a href="#">Eventos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informações</h4>
+      <ul>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#">Trabalhe Conosco</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <address>
+        Rua Shiitake, 108<br>
+        Centro — Itajubá/MG<br><br>
+        (35) 3622-0000<br>
+        WhatsApp: (35) 99800-0000<br><br>
+        contato@shiitake.com.br
+      </address>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Restaurante Shiitake. Todos os direitos reservados.</p>
+    <p style="color: var(--gold); font-size:12px">🍣 Feito com amor em Minas Gerais</p>
+  </div>
+</footer>
+<div class="footer-bar">OBRIGADO POR NOS ESCOLHER — 椎茸</div>
+
+<!-- CART FLOAT -->
+<button class="cart-float" onclick="openCart()">
+  🛒
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+<!-- CART MODAL -->
+<div class="modal-overlay" id="cartModal" onclick="if(event.target===this)closeCart()">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeCart()">×</button>
+    <div class="modal-title">Seu Pedido</div>
+    <div id="cartItems"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeCart()">Continuar</button>
+      <button class="btn-primary" onclick="checkout()">Finalizar Pedido</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<script>
+  let cart = [];
+
+  function filterMenu(cat) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(c => {
+      if (cat === 'todos' || c.dataset.cat === cat) {
+        c.classList.add('visible');
+      } else {
+        c.classList.remove('visible');
+      }
+    });
+  }
+
+  function addCart(name, price) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) existing.qty++;
+    else cart.push({ name, price, qty: 1 });
+    updateCartBadge();
+    showNotif(`${name} adicionado! 🍣`);
+  }
+
+  function updateCartBadge() {
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('cartBadge').textContent = total;
+  }
+
+  function openCart() {
+    const el = document.getElementById('cartItems');
+    if (cart.length === 0) {
+      el.innerHTML = '<div class="empty-cart">Seu carrinho está vazio.<br>Adicione alguns itens do cardápio! 🍣</div>';
+    } else {
+      let html = '';
+      let total = 0;
+      cart.forEach(i => {
+        html += `<div class="cart-item">
+          <span class="cart-item-name">${i.name} × ${i.qty}</span>
+          <span class="cart-item-price">R$ ${(i.price * i.qty).toFixed(2)}</span>
+        </div>`;
+        total += i.price * i.qty;
+      });
+      html += `<div class="cart-total"><span>Total</span><span>R$ ${total.toFixed(2)}</span></div>`;
+      el.innerHTML = html;
+    }
+    document.getElementById('cartModal').classList.add('open');
+  }
+
+  function closeCart() {
+    document.getElementById('cartModal').classList.remove('open');
+  }
+
+  function checkout() {
+    if (cart.length === 0) return;
+    closeCart();
+    cart = [];
+    updateCartBadge();
+    showNotif('Pedido enviado! Em breve entraremos em contato. ✅');
+  }
+
+  function showNotif(msg) {
+    const n = document.getElementById('notif');
+    n.textContent = msg;
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 3000);
+  }
+
+  function submitReserva(e) {
+    e.preventDefault();
+    showNotif('Reserva enviada! Confirmamos em breve. 📅');
+    e.target.reset();
+  }
+
+  function submitFranquia(e) {
+    e.preventDefault();
+    showNotif('Interesse registrado! Nossa equipe entrará em contato. 🏪');
+    e.target.reset();
+  }
+
+  // Scroll nav shrink
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.padding = window.scrollY > 40 ? '12px 48px' : '18px 48px';
+  });
+</script>
+</body>
+</html>
